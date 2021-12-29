@@ -1,0 +1,11 @@
+.navbar-item {
+    display: inline;
+    margin: 0 10px;
+    font-weight: 700;
+    cursor: pointer;
+    user-select: none;
+}
+
+.navbar-item:hover {
+    color: #555
+}

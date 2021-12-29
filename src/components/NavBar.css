@@ -11,21 +11,3 @@
     height: 100px;
     cursor: pointer;
 }
-
-.navbar-item {
-    display: inline;
-    margin: 0 10px;
-    font-weight: 700;
-    cursor: pointer;
-}
-
-.navbar-item:hover {
-    color: #555
-}
-
-.login-button {
-    padding: 15px 30px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-}

@@ -1,6 +1,8 @@
 import React from 'react'
 import './NavBar.css';
 import Logo from '../images/logo.png';
+import Button from './Button';
+import NavBarItem from './NavBarItem';
 
 const NavBar = () => {
     const gotoInicio = () => {
@@ -26,12 +28,12 @@ const NavBar = () => {
     return (
         <div className='nav-bar'>
             <img className='logo' onClick={gotoInicio} src={Logo}></img>
-            <ul>
-                <li className='navbar-item' onClick={gotoVehiculos}>Vehiculos</li>
-                <li className='navbar-item' onClick={gotoElectronica}>Electronica</li>
-                <li className='navbar-item' onClick={gotoLibros}>Libros</li>
-            </ul>
-            <button onClick={gotoLogin} className='login-button'>Login</button>
+            <div>
+                <NavBarItem onClick={gotoVehiculos}>Vehiculos</NavBarItem>
+                <NavBarItem onClick={gotoElectronica}>Electronica</NavBarItem>
+                <NavBarItem onClick={gotoLibros}>Libros</NavBarItem>
+            </div>
+            <Button onClick={gotoLogin}></Button>
         </div>
     )
 }
