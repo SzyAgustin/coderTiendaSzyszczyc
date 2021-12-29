@@ -1,0 +1,31 @@
+.nav-bar {
+    height: 100px;
+    background-color: #bbb;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 10px 30px 0px rgba(0, 0, 0, 0.185);
+}
+
+.logo {
+    height: 100px;
+    cursor: pointer;
+}
+
+.navbar-item {
+    display: inline;
+    margin: 0 10px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.navbar-item:hover {
+    color: #555
+}
+
+.login-button {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
