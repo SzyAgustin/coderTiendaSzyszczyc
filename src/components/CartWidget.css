@@ -1,0 +1,14 @@
+.cart-container {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.cart-icon {
+    height: 50px;
+}
+
+.cart-cant {
+    font-weight: 700;
+    font-size: 20px;
+}
