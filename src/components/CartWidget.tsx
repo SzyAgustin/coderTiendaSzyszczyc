@@ -10,7 +10,7 @@ const CartWidget = () => {
 
 
     return (
-        <div className='cart-container'>
+        <div onClick={gotoCart} className='cart-container'>
             <img className='cart-icon' src={CartIcon} alt="cart icon" />
             <p className='cart-cant'>{cartCant}</p>
         </div>
