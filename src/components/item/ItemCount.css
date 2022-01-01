@@ -2,15 +2,13 @@
   position: absolute;
   width: 90%;
   height: 12%;
-  margin: 0 auto;
-  bottom: 5%;
-  left: 0;
-  right: 0;
+  bottom: 8.5%;
   border: 2px solid rgb(185, 19, 19);
   background-color: #fff;
   cursor: pointer;
   color: rgb(185, 19, 19);
   transition: 0.2s;
+  border-radius: 5px;
 }
 
 .add-to-cart-button:hover {
@@ -25,13 +23,11 @@
   justify-content: space-between;
   border: 2px solid #bbb;
   width: 90%;
-  margin: 0 auto;
-  bottom: 22%;
-  left: 0;
-  right: 0;
+  bottom: 25%;
   height: 12%;
   align-items: center;
   box-sizing: border-box;
+  border-radius: 5px;
 }
 
 .amount-btns {
@@ -43,11 +39,34 @@
   transition: 0.1s;
 }
 
-.amount-btns.minus{
-    margin-bottom: 2px;
+.amount-btns.minus {
+  margin-bottom: 2px;
 }
 
 .amount-btns:hover {
   color: #f00;
   transition: 0.4s;
+}
+
+.btn-disabled {
+  color: gray;
+}
+
+.btn-disabled:hover {
+  color: gray;
+}
+
+.stock {
+  position: absolute;
+  bottom: 2%;
+  padding: 0;
+  width: 90%;
+  color: gray;
+  font-size: 13px;
+}
+
+.positioned {
+  margin: 0 auto;
+  left: 0;
+  right: 0;
 }

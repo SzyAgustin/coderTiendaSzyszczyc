@@ -1,5 +1,6 @@
 import React, { EventHandler } from "react";
 import "./ItemCount.css";
+let classNames = require("classnames");
 
 interface ItemCountProps {
   stock: number;
@@ -9,6 +10,8 @@ interface ItemCountProps {
 
 const ItemCount = ({ stock, initial, onAdd }: ItemCountProps) => {
   const [amountSelected, setAmountSelected] = React.useState(initial);
+  let minusDisabled = amountSelected <= 1;
+  let plusDisabled = amountSelected >= stock;
 
   const removeFromAmount = () => {
     setAmountSelected(amountSelected - 1);
@@ -19,29 +22,35 @@ const ItemCount = ({ stock, initial, onAdd }: ItemCountProps) => {
   };
 
   const add = () => {
-      onAdd(amountSelected);
-  }
+    onAdd(amountSelected);
+  };
+
+  let minusClass = classNames("amount-btns minus", {
+    "btn-disabled": minusDisabled,
+  });
+  let plusClass = classNames("amount-btns", { "btn-disabled": plusDisabled });
 
   return (
     <>
-      <div className="amount-container">
+      <div className="amount-container positioned">
         <button
-          className="amount-btns minus"
+          className={minusClass}
           onClick={removeFromAmount}
-          disabled={amountSelected <= 1}
+          disabled={minusDisabled}
         >
           -
         </button>
         <p>{amountSelected}</p>
         <button
-          className="amount-btns"
+          className={plusClass}
           onClick={addToAmount}
-          disabled={amountSelected >= stock}
+          disabled={plusDisabled}
         >
           +
         </button>
       </div>
-      <button onClick={add} className="add-to-cart-button">
+      <p className="stock positioned">Stock: {stock} {stock === 1 ? 'unidad' : 'unidades'}.</p>
+      <button onClick={add} className="add-to-cart-button positioned">
         Agregar al carrito
       </button>
     </>
