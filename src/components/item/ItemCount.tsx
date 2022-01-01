@@ -40,28 +40,30 @@ const ItemCount = ({ stock, initial, onAdd }: ItemCountProps) => {
 
   return (
     <>
-      {stock > 0 && (
-        <div className={amountContainerClass}>
-          <button
-            className={minusClass}
-            onClick={removeFromAmount}
-            disabled={minusDisabled}
-          >
-            -
-          </button>
-          <p>{amountSelected}</p>
-          <button
-            className={plusClass}
-            onClick={addToAmount}
-            disabled={plusDisabled}
-          >
-            +
-          </button>
-        </div>
-      )}
-      <p className="stock positioned">
-        Stock: {stock} {stock === 1 ? "unidad" : "unidades"}.
-      </p>
+      <div className={amountContainerClass}>
+        {stock > 0 ? (
+          <>
+            <button
+              className={minusClass}
+              onClick={removeFromAmount}
+              disabled={minusDisabled}
+            >
+              -
+            </button>
+            <p>{amountSelected}</p>
+            <button
+              className={plusClass}
+              onClick={addToAmount}
+              disabled={plusDisabled}
+            >
+              +
+            </button>
+          </>
+        ) : (
+          <p>Sin Stock</p>
+        )}
+      </div>
+
       <button
         onClick={add}
         className={addToCartClass}
@@ -69,6 +71,9 @@ const ItemCount = ({ stock, initial, onAdd }: ItemCountProps) => {
       >
         Agregar al carrito
       </button>
+      <p className="stock positioned">
+        Stock: {stock} {stock === 1 ? "unidad" : "unidades"}.
+      </p>
     </>
   );
 };

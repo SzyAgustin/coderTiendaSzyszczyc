@@ -82,3 +82,7 @@
   left: 0;
   right: 0;
 }
+
+.center {
+  justify-content: center;
+}
