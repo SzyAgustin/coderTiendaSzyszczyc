@@ -1,33 +1,13 @@
-.add-to-cart-button {
-  position: absolute;
-  width: 90%;
-  height: 12%;
-  bottom: 8.5%;
-  border: 2px solid rgb(185, 19, 19);
-  background-color: #fff;
-  cursor: pointer;
-  color: rgb(185, 19, 19);
-  transition: 0.2s;
-  border-radius: 5px;
-}
-
-.add-to-cart-button:hover {
-  color: #f00;
-  border-color: #f00;
-  transition: 0.4s;
-}
-
 .amount-container {
-  position: absolute;
   display: flex;
   justify-content: space-between;
   border: 2px solid #bbb;
-  width: 90%;
-  bottom: 25%;
-  height: 12%;
+  width: 100%;
+  height: 40px;
   align-items: center;
   box-sizing: border-box;
   border-radius: 5px;
+  margin: 5px 0;
 }
 
 .amount-btns {
@@ -56,6 +36,24 @@
   color: gray;
 }
 
+.add-to-cart-button {
+  width: 100%;
+  height: 30%;
+  border: 2px solid rgb(185, 19, 19);
+  background-color: #fff;
+  cursor: pointer;
+  border-radius: 5px;
+  color: rgb(185, 19, 19);
+  transition: 0.2s;
+  margin: 5px 0;
+}
+
+.add-to-cart-button:hover {
+  color: #f00;
+  border-color: #f00;
+  transition: 0.4s;
+}
+
 .add-to-cart-disabled {
     color: gray;
     border-color: gray;
@@ -69,20 +67,26 @@
 }
 
 .stock {
-  position: absolute;
-  bottom: 2%;
   padding: 0;
-  width: 90%;
+  width: 100%;
   color: gray;
   font-size: 13px;
 }
 
-.positioned {
-  margin: 0 auto;
-  left: 0;
-  right: 0;
-}
-
 .center {
   justify-content: center;
+}
+
+.item-count-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  bottom: 0%;
+  width: 90%;
+  height: 40%;
+  padding: 0 5%;
+}
+
+p {
+  margin: 0
 }

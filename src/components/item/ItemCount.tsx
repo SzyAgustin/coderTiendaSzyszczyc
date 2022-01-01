@@ -31,15 +31,15 @@ const ItemCount = ({ stock, initial, onAdd }: ItemCountProps) => {
     "btn-disabled": minusDisabled,
   });
   let plusClass = classNames("amount-btns", { "btn-disabled": plusDisabled });
-  let addToCartClass = classNames("add-to-cart-button positioned", {
+  let addToCartClass = classNames("add-to-cart-button", {
     "add-to-cart-disabled": addToCartDisabled,
   });
-  let amountContainerClass = classNames("amount-container positioned", {
+  let amountContainerClass = classNames("amount-container", {
     center: stock < 1,
   });
 
   return (
-    <>
+    <div className="item-count-container">
       <div className={amountContainerClass}>
         {stock > 0 ? (
           <>
@@ -71,10 +71,10 @@ const ItemCount = ({ stock, initial, onAdd }: ItemCountProps) => {
       >
         Agregar al carrito
       </button>
-      <p className="stock positioned">
+      <p className="stock">
         Stock: {stock} {stock === 1 ? "unidad" : "unidades"}.
       </p>
-    </>
+    </div>
   );
 };
 

@@ -16,6 +16,8 @@ const Item = ({item}: ItemProps) => {
 
     return (
         <div className='item-container'>
+
+            
             <ItemCount stock={stock} initial={1} onAdd={add} />
         </div>
     )
