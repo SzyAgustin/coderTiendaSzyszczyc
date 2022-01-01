@@ -12,6 +12,7 @@ const ItemCount = ({ stock, initial, onAdd }: ItemCountProps) => {
   const [amountSelected, setAmountSelected] = React.useState(initial);
   let minusDisabled = amountSelected <= 1;
   let plusDisabled = amountSelected >= stock;
+  let addToCartDisabled = stock === 0;
 
   const removeFromAmount = () => {
     setAmountSelected(amountSelected - 1);
@@ -22,6 +23,7 @@ const ItemCount = ({ stock, initial, onAdd }: ItemCountProps) => {
   };
 
   const add = () => {
+    setAmountSelected(1);
     onAdd(amountSelected);
   };
 
@@ -29,28 +31,42 @@ const ItemCount = ({ stock, initial, onAdd }: ItemCountProps) => {
     "btn-disabled": minusDisabled,
   });
   let plusClass = classNames("amount-btns", { "btn-disabled": plusDisabled });
+  let addToCartClass = classNames("add-to-cart-button positioned", {
+    "add-to-cart-disabled": addToCartDisabled,
+  });
+  let amountContainerClass = classNames("amount-container positioned", {
+    center: stock < 1,
+  });
 
   return (
     <>
-      <div className="amount-container positioned">
-        <button
-          className={minusClass}
-          onClick={removeFromAmount}
-          disabled={minusDisabled}
-        >
-          -
-        </button>
-        <p>{amountSelected}</p>
-        <button
-          className={plusClass}
-          onClick={addToAmount}
-          disabled={plusDisabled}
-        >
-          +
-        </button>
-      </div>
-      <p className="stock positioned">Stock: {stock} {stock === 1 ? 'unidad' : 'unidades'}.</p>
-      <button onClick={add} className="add-to-cart-button positioned">
+      {stock > 0 && (
+        <div className={amountContainerClass}>
+          <button
+            className={minusClass}
+            onClick={removeFromAmount}
+            disabled={minusDisabled}
+          >
+            -
+          </button>
+          <p>{amountSelected}</p>
+          <button
+            className={plusClass}
+            onClick={addToAmount}
+            disabled={plusDisabled}
+          >
+            +
+          </button>
+        </div>
+      )}
+      <p className="stock positioned">
+        Stock: {stock} {stock === 1 ? "unidad" : "unidades"}.
+      </p>
+      <button
+        onClick={add}
+        className={addToCartClass}
+        disabled={addToCartDisabled}
+      >
         Agregar al carrito
       </button>
     </>

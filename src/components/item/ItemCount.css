@@ -56,6 +56,18 @@
   color: gray;
 }
 
+.add-to-cart-disabled {
+    color: gray;
+    border-color: gray;
+    cursor:not-allowed;
+}
+
+.add-to-cart-disabled:hover {
+    color: gray;
+    border-color: gray;
+    cursor:not-allowed;
+}
+
 .stock {
   position: absolute;
   bottom: 2%;
