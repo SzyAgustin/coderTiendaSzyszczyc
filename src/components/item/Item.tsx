@@ -1,26 +1,30 @@
-import React from 'react'
-import ItemCount from './ItemCount'
-import { IItem } from '../../services/ItemService'
-import './Item.css';
+import React from "react";
+import ItemCount from "./ItemCount";
+import { IItem } from "../../services/ItemService";
+import "./Item.css";
 
 interface ItemProps {
-    item: IItem;
+  item: IItem;
 }
 
-const Item = ({item}: ItemProps) => {
-    const [stock, setStock] = React.useState(item.stock);
-    const add = (amountToAdd: number) => {
-        setStock(stock - amountToAdd);
-        console.log('after this, add to user cart');
-    }
+const Item = ({ item }: ItemProps) => {
+  const [stock, setStock] = React.useState(item.stock);
+  const add = (amountToAdd: number) => {
+    setStock(stock - amountToAdd);
+    console.log("after this, add to user cart");
+  };
 
-    return (
-        <div className='item-container'>
+  return (
+    <div className="item-container">
+      <div className="title-container">
+        <h5 className="title">{item.title}</h5>
+      </div>
+      <div className="image-container">
+        <img className="image" src={item.pictureUrl} alt="" />
+      </div>
+      <ItemCount stock={stock} initial={1} onAdd={add} />
+    </div>
+  );
+};
 
-            
-            <ItemCount stock={stock} initial={1} onAdd={add} />
-        </div>
-    )
-}
-
-export default Item
+export default Item;
