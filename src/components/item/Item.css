@@ -2,7 +2,7 @@
     position: relative;
     height: 300px;
     width: 240px;
-    background-color: #e1e1e1;
+    background-color: white;
     border-radius: 5px;
     margin: 20px;
     box-shadow: 0 0px 10px 0px rgba(0, 0, 0, 0.404);
@@ -20,6 +20,9 @@
     text-align: center;
     margin: 10px 0;
     font-weight: 500;
+    text-overflow: ellipsis;
+    overflow: hidden; 
+    white-space: nowrap;
 }
 
 .image-container {
@@ -37,3 +40,11 @@
 .image {
     width: 100%;
 }
+
+.item-count-container {
+    bottom: 0%;
+    width: 97.5%;
+    margin-bottom: 2px;
+    box-sizing: border-box;
+    padding: 0 2.5%;
+  }
