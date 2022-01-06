@@ -6,6 +6,13 @@
     border-radius: 5px;
     margin: 20px;
     box-shadow: 0 0px 10px 0px rgba(0, 0, 0, 0.404);
+    cursor: pointer;
+    transition: 0.1s;
+}
+
+.item-container:hover {
+    box-shadow: 0 0px 20px 0px rgba(0, 0, 0, 0.404);
+    transition: 0.2s;
 }
 
 .title-container {
@@ -41,7 +48,7 @@
     width: 100%;
 }
 
-.item-count {
+.item-count-from-item {
     margin-top: 5px;
     box-sizing: border-box;
     padding: 0 5%;

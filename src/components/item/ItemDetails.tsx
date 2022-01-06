@@ -30,7 +30,7 @@ const ItemDetails = ({ item }: ItemDetailsProps) => {
   };
 
   return (
-    <div className="container">
+    <div className="container-details">
       <div className="main">
         <div style={imageStyle}></div>
       </div>

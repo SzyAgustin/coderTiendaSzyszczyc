@@ -1,4 +1,4 @@
-import React, { EventHandler } from "react";
+import React from "react";
 import "./ItemCount.css";
 let classNames = require("classnames");
 
@@ -14,15 +14,18 @@ const ItemCount = ({ stock, initial, onAdd }: ItemCountProps) => {
   let plusDisabled = amountSelected >= stock;
   let addToCartDisabled = stock === 0;
 
-  const removeFromAmount = () => {
+  const removeFromAmount = (e: React.MouseEvent<HTMLElement>) => {
+    if (e.stopPropagation) e.stopPropagation()
     setAmountSelected(amountSelected - 1);
   };
 
-  const addToAmount = () => {
+  const addToAmount = (e: React.MouseEvent<HTMLElement>) => {
+    if (e.stopPropagation) e.stopPropagation()
     setAmountSelected(amountSelected + 1);
   };
 
-  const add = () => {
+  const add = (e: React.MouseEvent<HTMLElement>) => {
+    if (e.stopPropagation) e.stopPropagation()
     setAmountSelected(1);
     onAdd(amountSelected);
   };
@@ -40,7 +43,7 @@ const ItemCount = ({ stock, initial, onAdd }: ItemCountProps) => {
 
   return (
     <div className="item-count-container">
-      <div className={amountContainerClass}>
+      <div onClick={(e: React.MouseEvent<HTMLElement>) => e.stopPropagation()} className={amountContainerClass}>
         {stock > 0 ? (
           <>
             <button
