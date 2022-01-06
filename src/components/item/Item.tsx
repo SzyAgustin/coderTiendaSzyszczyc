@@ -22,7 +22,7 @@ const Item = ({ item }: ItemProps) => {
       <div className="image-container">
         <img className="image" src={item.pictureUrl} alt="" />
       </div>
-      <div className="item-count-container">
+      <div className="item-count">
         <ItemCount stock={stock} initial={1} onAdd={add} />
       </div>
     </div>

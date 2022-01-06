@@ -41,10 +41,8 @@
     width: 100%;
 }
 
-.item-count-container {
-    bottom: 0%;
-    width: 97.5%;
-    margin-bottom: 2px;
+.item-count {
+    margin-top: 5px;
     box-sizing: border-box;
-    padding: 0 2.5%;
+    padding: 0 5%;
   }

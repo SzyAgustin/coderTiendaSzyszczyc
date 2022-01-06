@@ -24,6 +24,7 @@
     border: 1px solid #bbb;
     border-radius: 10px;
     margin: 15px;
+    position: relative;
     /* height: 100%; */
 }
 
@@ -38,9 +39,24 @@
     letter-spacing: 1px;
 }
 
-.item-count-container {
+.item-count {
     position: relative;
-    margin-bottom: 0%;
-    /* bottom: 20%; */
-    /* width: 100%; */
 }
+
+.buy-button {
+    margin-top: 20px;
+    border: none;
+    height: 40px;
+    width: 100%;
+    border-radius: 5px;
+    background-color: rgb(185, 19, 19);
+    color: white;
+    cursor: pointer;
+    transition: 0.1s;
+}
+
+.buy-button:hover{
+    background-color: red;
+    transition: 0.2s;
+}
+

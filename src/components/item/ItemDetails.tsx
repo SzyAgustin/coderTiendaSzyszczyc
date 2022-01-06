@@ -9,9 +9,16 @@ interface ItemDetailsProps {
 }
 
 const ItemDetails = ({ item }: ItemDetailsProps) => {
-  const add = () => {
-    console.log("send to cart");
+  const [stock, setStock] = React.useState(item.stock);
+
+  const add = (amount: number) => {
+    setStock(stock - amount);
   };
+
+  const buyNow = () => {
+    console.log("go to buy now");
+  };
+
   const imageStyle = {
     backgroundImage: `url(${item.pictureUrl})`,
     width: "70%",
@@ -30,9 +37,12 @@ const ItemDetails = ({ item }: ItemDetailsProps) => {
       <div className="aside">
         <h2 className="title">{item.title}</h2>
         <h3 className="price">$ {item.price}</h3>
-        <div className="item-count-container">
-          <ItemCount stock={item.stock} initial={1} onAdd={add}></ItemCount>
+        <div className="item-count">
+          <ItemCount stock={stock} initial={1} onAdd={add}></ItemCount>
         </div>
+        <button onClick={buyNow} className="buy-button">
+          Comprar ahora
+        </button>
       </div>
     </div>
   );

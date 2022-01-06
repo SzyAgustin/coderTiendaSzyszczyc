@@ -7,9 +7,9 @@ function App() {
   return (
     <>
       <NavBar />
-      {/* <ItemListContainer /> */}
+      <ItemListContainer />
 
-      <ItemDetailContainer />
+      {/* <ItemDetailContainer /> */}
     </>
   );
 }
