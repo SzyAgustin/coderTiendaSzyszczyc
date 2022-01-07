@@ -3,6 +3,7 @@ import React from "react";
 import { IItem } from "../../services/ItemService";
 import "./ItemDetails.css";
 import ItemCount from "./ItemCount";
+import { NavLink } from "react-router-dom";
 
 interface ItemDetailsProps {
   item: IItem;
@@ -40,9 +41,9 @@ const ItemDetails = ({ item }: ItemDetailsProps) => {
         <div className="item-count">
           <ItemCount stock={stock} initial={1} onAdd={add}></ItemCount>
         </div>
-        <button onClick={buyNow} className="buy-button">
-          Comprar ahora
-        </button>
+        <NavLink to="/cart">
+          <button className="buy-button">Comprar ahora</button>
+        </NavLink>
       </div>
     </div>
   );
