@@ -31,7 +31,7 @@ const NavBar = () => {
           Libros
         </NavLink>
       </div>
-      {!loggedIn ? <Button onClick={gotoLogin}></Button> : <CartWidget />}
+      {!loggedIn ? <Button onClick={gotoLogin}></Button> : <NavLink className={() => 'cart'} to="/cart"><CartWidget /></NavLink>}
     </div>
   );
 };
