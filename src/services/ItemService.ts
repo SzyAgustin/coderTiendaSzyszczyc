@@ -27,9 +27,9 @@ const asyncMock = (category: string | undefined) => new Promise<IItem[]>((resolv
   }, 2000);
 })
 
-export const getItem = (itemId: string) => new Promise<IItem>((resolve, reject) => {
+export const getItem = (itemId: string) => new Promise<IItem | undefined>((resolve, reject) => {
   setTimeout(function () {
-    resolve(arr[parseInt(itemId)]);
+    resolve(arr.find(item => item.id === parseInt(itemId)));
   }, 2000);
 })
 

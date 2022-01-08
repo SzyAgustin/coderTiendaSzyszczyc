@@ -2,9 +2,8 @@ import React from "react";
 import "./NavBar.css";
 import Logo from "../images/logo.png";
 import Button from "./Button";
-// import NavBarItem from "./NavBarItem";
 import CartWidget from "./CartWidget";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const NavBar = () => {
   const [loggedIn, setLoggedIn] = React.useState(true);
