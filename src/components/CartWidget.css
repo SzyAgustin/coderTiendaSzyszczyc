@@ -1,14 +1,15 @@
-.cart-container {
+.cart-widget-container {
     cursor: pointer;
     display: flex;
     align-items: center;
+    width: 62px;
 }
 
-.cart-icon {
+.cart-widget-icon {
     height: 50px;
 }
 
-.cart-cant {
+.cart-widget-cant {
     font-weight: 700;
     font-size: 20px;
 }

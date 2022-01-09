@@ -4,15 +4,16 @@ import './CartWidget.css';
 import { CartContext } from '../context/CartContext';
 
 const CartWidget = () => {
-  // const [cartCant, setCartCant] = React.useState(0);
   const { cartItems } = useContext(CartContext);
 
-  console.log(cartItems)
-
   return (
-    <div className='cart-container'>
-      <img className='cart-icon' src={CartIcon} alt='cart icon' />
-      <p className='cart-cant'>{cartItems.length}</p>
+    <div className='cart-widget-container'>
+      {cartItems.length !== 0 && (
+        <>
+          <img className='cart-widget-icon' src={CartIcon} alt='cart icon' />
+          <p className='cart-widget-cant'>{cartItems.length}</p>
+        </>
+      )}
     </div>
   );
 };

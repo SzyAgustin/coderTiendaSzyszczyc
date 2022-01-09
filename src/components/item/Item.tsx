@@ -16,12 +16,7 @@ const Item = ({ item }: ItemProps) => {
 
   const add = (amountToAdd: number) => {
     setStock(stock - amountToAdd);
-    const itemToAdd = {
-      id: item.id,
-      title: item.title,
-      amount: amountToAdd
-    }
-    cart.addItem!(itemToAdd);
+    cart.addItem!({...item, amount: amountToAdd});
   };
 
   const gotoItemDetails = () => {

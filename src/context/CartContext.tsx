@@ -1,23 +1,24 @@
 import React, { createContext, useContext, useState } from "react";
+import { NumericLiteral } from "typescript";
+import { IItem } from '../services/ItemService';
 
-interface IItem {
-  id: number;
-  title: string;
-  amount: number;
+export interface IItemCart extends IItem {
+  amount: number
 }
 
 interface CartProviderProps {
-  defaultValue?: IItem[];
+  defaultValue?: IItemCart[];
   children: any;
 }
 
 interface ICartContext {
-    cartItems: IItem[],
-    addItem?: (item: IItem) => void,
+    cartItems: IItemCart[],
+    addItem?: (item: IItemCart) => void,
     removeItem?: (id: number) => void,
     clear?: () => void,
     isInCart?: (id: number) => void,
-    getAmountInCart?: (id: number) => number
+    getAmountInCart?: (id: number) => number,
+    getTotalPrice?: () => number
 }
 
 const defaultState = {
@@ -32,7 +33,7 @@ export const CartProvider = ({
 }: CartProviderProps) => {
   const [cartItems, setCartItems] = useState(defaultValue);
 
-  const addItem = (item: IItem) => {
+  const addItem = (item: IItemCart) => {
     if (isInCart(item.id)) {
       const modified = cartItems.map((cartItem) => {
         if (cartItem.id === item.id)
@@ -62,9 +63,13 @@ export const CartProvider = ({
     return item ? item.amount : 0;
   }
 
+  const getTotalPrice = () => {
+    return cartItems.map(item => item.amount * item.price).reduce((prev, cur) => prev + cur);
+  }
+
   return (
     <CartContext.Provider
-      value={{ cartItems, addItem, removeItem, clear, isInCart, getAmountInCart }}
+      value={{ cartItems, addItem, removeItem, clear, isInCart, getAmountInCart, getTotalPrice }}
     >
       {children}
     </CartContext.Provider>

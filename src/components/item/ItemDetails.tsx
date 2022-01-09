@@ -12,18 +12,11 @@ interface ItemDetailsProps {
 
 const ItemDetails = ({ item }: ItemDetailsProps) => {
   const cart = useContext(CartContext);
-  const [stock, setStock] = React.useState(
-    item.stock - cart.getAmountInCart!(item.id)
-  );
+  const [stock, setStock] = React.useState(item.stock - cart.getAmountInCart!(item.id));
 
   const add = (amountToAdd: number) => {
     setStock(stock - amountToAdd);
-    const itemToAdd = {
-      id: item.id,
-      title: item.title,
-      amount: amountToAdd
-    }
-    cart.addItem!(itemToAdd);
+    cart.addItem!({...item, amount: amountToAdd});
   };
 
   const buyNow = () => {
