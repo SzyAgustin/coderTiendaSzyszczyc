@@ -20,7 +20,7 @@ const ItemDetails = ({ item }: ItemDetailsProps) => {
   };
 
   const buyNow = () => {
-    console.log('go to buy now');
+    // add()
   };
 
   const imageStyle = {
@@ -44,9 +44,6 @@ const ItemDetails = ({ item }: ItemDetailsProps) => {
         <div className='item-count'>
           <ItemCount stock={stock} initial={1} onAdd={add}></ItemCount>
         </div>
-        <NavLink to='/cart'>
-          <button className='buy-button'>Comprar ahora</button>
-        </NavLink>
       </div>
     </div>
   );

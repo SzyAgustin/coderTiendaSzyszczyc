@@ -11,7 +11,28 @@
 // const arr = [producto1, producto2, producto3, producto4, producto5, producto6, producto7, producto8, producto9];
 
 import { db } from "./Firebase";
-import { collection, doc, query, where } from "firebase/firestore";
+import { collection, doc, query, where, Timestamp } from "firebase/firestore";
+
+export interface IBuyer {
+  name: string,
+  phone: number,
+  email: string
+}
+
+export interface IOrderedItem {
+  id: string,
+  title: string,
+  price: number,
+  amount: number
+}
+
+export interface IOrder {
+  buyer: IBuyer,
+  items: IOrderedItem,
+  date: Timestamp,
+  total: number
+}
+
 
 export interface IItem {
   id: string;
