@@ -4,7 +4,7 @@ import { IItemCart } from '../context/CartContext';
 
 interface CartItemProps {
     item: IItemCart,
-    onDelete: (id: number) => void
+    onDelete: (id: string) => void
 }
 
 const CartItem = ({item, onDelete}: CartItemProps) => {

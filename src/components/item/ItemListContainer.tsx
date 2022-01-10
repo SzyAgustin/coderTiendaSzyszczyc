@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
-import ItemList from "./ItemList";
-import "./ItemListContainer.css";
+import React, { useState, useEffect } from 'react';
+import ItemList from './ItemList';
+import './ItemListContainer.css';
 import { useParams } from 'react-router-dom';
-import asyncMock, { IItem } from "../../services/ItemService";
+import { getItems, IItem } from '../../services/ItemService';
+import { getDocs, QuerySnapshot } from 'firebase/firestore';
 
 const ItemListContainer = () => {
   const [items, setItems] = useState<IItem[]>([]);
@@ -11,14 +12,16 @@ const ItemListContainer = () => {
 
   useEffect(() => {
     setLoading(true);
-    asyncMock(id).then((res) => {
-      setItems(res);
-      setLoading(false);
+    getItems(id).then((query) => {
+      getDocs(query).then((querySnapshot) => {
+        setItems(querySnapshot.docs.map((doc) => { return {id: doc.id, ...doc.data()} as IItem}));
+        setLoading(false);
+      })
     });
   }, [id]);
 
   return (
-    <div className="container-list">
+    <div className='container-list'>
       {loading ? <p>Loading Items...</p> : <ItemList items={items} />}
     </div>
   );

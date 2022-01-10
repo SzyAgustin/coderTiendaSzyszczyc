@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getItem, IItem } from '../../services/ItemService';
 import { useParams } from 'react-router-dom';
 import ItemDetails from './ItemDetails';
+import { getDoc, doc } from 'firebase/firestore';
 import './ItemDetailContainer.css';
 
 const ItemDetailContainer = () => {
@@ -11,9 +12,9 @@ const ItemDetailContainer = () => {
 
   useEffect(() => {
     setLoading(true);
-    getItem(id!).then((res) => {
+    getDoc(getItem(id!)).then((doc) => {
+      setItem(doc.exists() ? {id: doc.id, ...doc.data()} as IItem : null)
       setLoading(false);
-      setItem(res ? res : null);
     });
   }, [id]);
 

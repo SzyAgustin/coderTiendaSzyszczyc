@@ -14,10 +14,10 @@ interface CartProviderProps {
 interface ICartContext {
     cartItems: IItemCart[],
     addItem?: (item: IItemCart) => void,
-    removeItem?: (id: number) => void,
+    removeItem?: (id: string) => void,
     clear?: () => void,
-    isInCart?: (id: number) => void,
-    getAmountInCart?: (id: number) => number,
+    isInCart?: (id: string) => void,
+    getAmountInCart?: (id: string) => number,
     getTotalPrice?: () => number
 }
 
@@ -46,7 +46,7 @@ export const CartProvider = ({
     setCartItems([...cartItems, item]);
   };
 
-  const removeItem = (id: number) => {
+  const removeItem = (id: string) => {
     setCartItems(cartItems.filter((item) => item.id != id));
   };
 
@@ -54,11 +54,11 @@ export const CartProvider = ({
     setCartItems([]);
   };
 
-  const isInCart = (id: number) => {
+  const isInCart = (id: string) => {
     return cartItems.some((item) => item.id === id);
   };
 
-  const getAmountInCart = (itemId: number) => {
+  const getAmountInCart = (itemId: string) => {
     const item = cartItems.find(item => item.id === itemId);
     return item ? item.amount : 0;
   }

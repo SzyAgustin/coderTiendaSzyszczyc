@@ -7,7 +7,7 @@ import CartItem from './CartItem';
 const Cart = () => {
   const cart = useContext(CartContext);
 
-  const handleDelete = (id: number) => {
+  const handleDelete = (id: string) => {
     cart.removeItem!(id);
   }
   return (
