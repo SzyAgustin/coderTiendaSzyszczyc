@@ -3,10 +3,13 @@ import { CartContext } from '../context/CartContext';
 import './Cart.css';
 import { Link } from 'react-router-dom';
 import CartItem from './CartItem';
-import { Timestamp, addDoc } from 'firebase/firestore';
-import { getOrderList } from '../services/OrderService';
+import { Timestamp, addDoc, writeBatch, Firestore } from 'firebase/firestore';
+import { getFirestore } from 'firebase/firestore';
 import ResultMessage from './ResultMessage';
 import { useNavigate } from 'react-router-dom';
+import { db, getFirebase } from '../services/Firebase';
+import { getOrderList } from '../services/OrderService';
+import { getItem } from '../services/ItemService';
 
 const Cart = () => {
   const cart = useContext(CartContext);
@@ -47,13 +50,30 @@ const Cart = () => {
   };
 
   const updateStock = () => {
-
-  }
+    cart.cartItems.forEach((item) => {
+      writeBatch(db).update(
+        getItem(item.id),
+        'stock',
+        item.stock - item.amount //no esta haciendo el update y no entiendo por que...
+      );
+    });
+    writeBatch(db)
+      .commit()
+      .then((res) => {
+        console.log('succ');
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log('err');
+        console.log(err);
+      });
+  };
 
   const handleOrder = () => {
     setBuying(true);
     const orderToAdd = getReadyOrder();
     const orderList = getOrderList();
+    
     addDoc(orderList, orderToAdd)
       .then((res) => {
         updateStock();
