@@ -28,7 +28,7 @@ export interface IOrderedItem {
 
 export interface IOrder {
   buyer: IBuyer,
-  items: IOrderedItem,
+  items: IOrderedItem[],
   date: Timestamp,
   total: number
 }
@@ -44,7 +44,7 @@ export interface IItem {
   category: string;
 }
 
-export const getItems = async (category: string | undefined) => {
+export const getItems = (category: string | undefined) => {
   return category ? query(collection(db, "ItemList"), where("category", "==", category)) : collection(db, "ItemList");
 }
 

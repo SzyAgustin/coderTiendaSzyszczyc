@@ -3,7 +3,7 @@ import ItemList from './ItemList';
 import './ItemListContainer.css';
 import { useParams } from 'react-router-dom';
 import { getItems, IItem } from '../../services/ItemService';
-import { getDocs, QuerySnapshot } from 'firebase/firestore';
+import { getDocs } from 'firebase/firestore';
 
 const ItemListContainer = () => {
   const [items, setItems] = useState<IItem[]>([]);
@@ -12,11 +12,14 @@ const ItemListContainer = () => {
 
   useEffect(() => {
     setLoading(true);
-    getItems(id).then((query) => {
-      getDocs(query).then((querySnapshot) => {
-        setItems(querySnapshot.docs.map((doc) => { return {id: doc.id, ...doc.data()} as IItem}));
-        setLoading(false);
-      })
+    const query = getItems(id);
+    getDocs(query).then((querySnapshot) => {
+      setItems(
+        querySnapshot.docs.map((doc) => {
+          return { id: doc.id, ...doc.data() } as IItem;
+        })
+      );
+      setLoading(false);
     });
   }, [id]);
 
