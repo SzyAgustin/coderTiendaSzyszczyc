@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { getItem, IItem } from '../../services/ItemService';
 import { useParams } from 'react-router-dom';
 import ItemDetails from './ItemDetails';
-import { getDoc, doc } from 'firebase/firestore';
-import './ItemDetailContainer.css';
+import { getDoc } from 'firebase/firestore';
+import styled from 'styled-components';
 
 const ItemDetailContainer = () => {
   const [item, setItem] = useState<IItem | null>(null);
@@ -13,14 +13,19 @@ const ItemDetailContainer = () => {
   useEffect(() => {
     setLoading(true);
     getDoc(getItem(id!)).then((doc) => {
-      setItem(doc.exists() ? {id: doc.id, ...doc.data()} as IItem : null)
+      setItem(doc.exists() ? ({ id: doc.id, ...doc.data() } as IItem) : null);
       setLoading(false);
     });
   }, [id]);
 
+  const Text = styled.p`
+    width: 100%;
+    text-align: center;
+  `;
+
   {
     if (loading) {
-      return <p className='loading'>loading... </p>;
+      return <Text>Loading item... </Text>;
     }
   }
 
@@ -29,7 +34,7 @@ const ItemDetailContainer = () => {
       {item ? (
         <ItemDetails item={item} />
       ) : (
-        <p className='loading'>No se encontro el item... </p>
+        <Text>No se encontro el item... </Text>
       )}
     </>
   );
