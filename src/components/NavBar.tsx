@@ -1,17 +1,10 @@
 import React from "react";
 import "./NavBar.css";
 import Logo from "../images/logo.png";
-import Button from "./Button";
 import CartWidget from "./CartWidget";
 import { NavLink } from "react-router-dom";
 
 const NavBar = () => {
-  const [loggedIn, setLoggedIn] = React.useState(true);
-
-  const gotoLogin = () => {
-    console.log("Go to Login");
-  };
-
   const navItemClass = (navData: any) => navData.isActive ? "navbar-item active" : "navbar-item"
 
   return (
@@ -30,7 +23,7 @@ const NavBar = () => {
           Libros
         </NavLink>
       </div>
-      {!loggedIn ? <Button onClick={gotoLogin}></Button> : <NavLink className={() => 'cart'} to="/cart"><CartWidget /></NavLink>}
+      <NavLink className={() => 'cart'} to="/cart"><CartWidget /></NavLink>
     </div>
   );
 };
