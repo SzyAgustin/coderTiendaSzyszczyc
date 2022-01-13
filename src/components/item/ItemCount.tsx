@@ -1,6 +1,6 @@
 import React from 'react';
-import './ItemCount.css';
 import { useLocation, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 let classNames = require('classnames');
 
 interface ItemCountProps {
@@ -9,14 +9,98 @@ interface ItemCountProps {
   onAdd(amountToAdd: number): any;
 }
 
+const ItemCountContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Stock = styled.p`
+  padding: 0;
+  width: 100%;
+  color: gray;
+  font-size: 13px;
+  margin: 0;
+`;
+
+const BuyButton = styled.button`
+  margin-top: 15px;
+  border: none;
+  height: 40px;
+  width: 100%;
+  border-radius: 5px;
+  background-color: rgb(185, 19, 19);
+  color: white;
+  cursor: pointer;
+  transition: 0.1s;
+  font-size: 16px;
+
+  &:hover {
+    background-color: red;
+    transition: 0.2s;
+  }
+`;
+
+interface AmountContainerProps {
+  stock: number;
+}
+
+const AmountContainer = styled.div<AmountContainerProps>`
+  display: flex;
+  justify-content: space-between;
+  border: 2px solid #bbb;
+  width: 100%;
+  height: 40px;
+  align-items: center;
+  box-sizing: border-box;
+  border-radius: 5px;
+  margin: 5px 0;
+  ${(p) => (p.stock < 1 ? 'justify-content: center;' : '')}
+`;
+
+const AmountButton = styled.button`
+  background: none;
+  border: none;
+  font-size: 30px;
+  color: ${(p) => (p.disabled ? 'gray' : 'rgb(185, 19, 19)')};
+  cursor: pointer;
+  transition: 0.1s;
+  user-select: none;
+
+  &:hover {
+    color: ${(p) => (p.disabled ? 'gray' : 'red')};
+    transition: 0.4s;
+  }
+`;
+
+const AmountButtonMinus = styled(AmountButton)`
+  margin-bottom: 2px;
+`;
+
+const AddToCartButton = styled.button`
+  width: 100%;
+  height: 40px;
+  border: 2px solid ${p => p.disabled ? 'gray' : 'rgb(185, 19, 19)'};
+  background-color: #fff;
+  cursor: ${p => p.disabled ? 'not-allowed' : 'pointer'};
+  border-radius: 5px;
+  color: ${p => p.disabled ? 'gray' : 'rgb(185, 19, 19)'};
+  transition: 0.2s;
+  margin: 5px 0;
+  user-select: none;
+
+  &:hover {
+    color: ${p => p.disabled ? 'gray' : 'red'};
+    border-color: ${p => p.disabled ? 'gray' : 'red'};
+    transition: 0.4s;
+  }
+`;
+
 const ItemCount = ({ stock, initial, onAdd }: ItemCountProps) => {
   const [amountSelected, setAmountSelected] = React.useState(initial);
   let minusDisabled = amountSelected <= 1;
   let plusDisabled = amountSelected >= stock;
   let addToCartDisabled = stock === 0;
   const navigate = useNavigate();
-
-  // console.log(useLocation().pathname);
 
   const removeFromAmount = (e: React.MouseEvent<HTMLElement>) => {
     if (e.stopPropagation) e.stopPropagation();
@@ -34,17 +118,6 @@ const ItemCount = ({ stock, initial, onAdd }: ItemCountProps) => {
     setAmountSelected(1);
   };
 
-  let minusClass = classNames('amount-btns minus', {
-    'btn-disabled': minusDisabled,
-  });
-  let plusClass = classNames('amount-btns', { 'btn-disabled': plusDisabled });
-  let addToCartClass = classNames('add-to-cart-button', {
-    'add-to-cart-disabled': addToCartDisabled,
-  });
-  let amountContainerClass = classNames('amount-container', {
-    center: stock < 1,
-  });
-
   const buyNow = () => {
     onAdd(amountSelected);
     setAmountSelected(1);
@@ -52,50 +125,42 @@ const ItemCount = ({ stock, initial, onAdd }: ItemCountProps) => {
   };
 
   return (
-    <div className='item-count-container'>
-      <div
+    <ItemCountContainer>
+      <AmountContainer
         onClick={(e: React.MouseEvent<HTMLElement>) => e.stopPropagation()}
-        className={amountContainerClass}
+        stock={stock}
       >
         {stock > 0 ? (
           <>
-            <button
-              className={minusClass}
+            <AmountButtonMinus
               onClick={removeFromAmount}
               disabled={minusDisabled}
             >
               -
-            </button>
+            </AmountButtonMinus>
             <p>{amountSelected}</p>
-            <button
-              className={plusClass}
-              onClick={addToAmount}
-              disabled={plusDisabled}
-            >
+            <AmountButton onClick={addToAmount} disabled={plusDisabled}>
               +
-            </button>
+            </AmountButton>
           </>
         ) : (
           <p>Sin Stock</p>
         )}
-      </div>
+      </AmountContainer>
 
-      <button
+      <AddToCartButton
         onClick={add}
-        className={addToCartClass}
         disabled={addToCartDisabled}
       >
         Agregar al carrito
-      </button>
-      <p className='stock'>
+      </AddToCartButton>
+      <Stock>
         Stock: {stock} {stock === 1 ? 'unidad' : 'unidades'}.
-      </p>
+      </Stock>
       {useLocation().pathname.includes('item') && (
-        <button onClick={buyNow} className='buy-button'>
-          Comprar ahora
-        </button>
+        <BuyButton onClick={buyNow}>Comprar ahora</BuyButton>
       )}
-    </div>
+    </ItemCountContainer>
   );
 };
 
