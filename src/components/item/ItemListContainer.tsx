@@ -5,6 +5,15 @@ import { getItems, IItem } from '../../services/ItemService';
 import { getDocs } from 'firebase/firestore';
 import styled from 'styled-components';
 
+const ListContainer = styled.div`
+  padding-top: 20px;
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+`;
+
 const ItemListContainer = () => {
   const [items, setItems] = useState<IItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -22,15 +31,6 @@ const ItemListContainer = () => {
       setLoading(false);
     });
   }, [id]);
-
-  const ListContainer = styled.div`
-    padding-top: 20px;
-    width: 80%;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-  `;
 
   return (
     <ListContainer>

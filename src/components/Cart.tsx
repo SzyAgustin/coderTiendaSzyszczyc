@@ -1,15 +1,49 @@
 import React, { useContext, useState } from 'react';
 import { CartContext } from '../context/CartContext';
-import './Cart.css';
 import { Link } from 'react-router-dom';
 import CartItem from './CartItem';
 import { Timestamp, addDoc, writeBatch, Firestore } from 'firebase/firestore';
-import { getFirestore } from 'firebase/firestore';
 import ResultMessage from './ResultMessage';
 import { useNavigate } from 'react-router-dom';
-import { db, getFirebase } from '../services/Firebase';
+import { db } from '../services/Firebase';
 import { getOrderList } from '../services/OrderService';
 import { getItem } from '../services/ItemService';
+import styled from 'styled-components';
+
+const CartContainer = styled.div`
+  width: 80%;
+  background-color: white;
+  margin: 10px auto;
+  border-radius: 5px;
+  box-shadow: 0 0px 5px 0px rgba(0, 0, 0, 0.2);
+`;
+
+const PriceBuy = styled.div`
+  height: 170px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+`;
+
+interface CartButtonProps {
+  buying: boolean
+}
+const CartButton = styled.button<CartButtonProps>`
+  border: none;
+  height: 50px;
+  width: 260px;
+  border-radius: 5px;
+  background-color: ${props => props.buying ? 'gray' : 'rgb(185, 19, 19)'};
+  color: white;
+  cursor: pointer;
+  transition: 0.1s;
+  font-size: 20px;
+
+  &:hover {
+    background-color: ${props => props.buying ? 'gray' : 'red'};
+    transition: 0.2s;
+  }
+`;
 
 const Cart = () => {
   const cart = useContext(CartContext);
@@ -73,7 +107,7 @@ const Cart = () => {
     setBuying(true);
     const orderToAdd = getReadyOrder();
     const orderList = getOrderList();
-    
+
     addDoc(orderList, orderToAdd)
       .then((res) => {
         updateStock();
@@ -94,38 +128,32 @@ const Cart = () => {
   return (
     <>
       <ResultMessage visible={showMessage} success={success} />
-      <div className='cart-container'>
+      <CartContainer>
         {cart.cartItems.map((item) => (
           <CartItem item={item} onDelete={handleDelete}></CartItem>
         ))}
-        <div className='price-buy'>
+        <PriceBuy>
           {cart.cartItems.length === 0 ? (
             <>
               <h1>No hay items en el carrito</h1>
               <Link to='/'>
-                <button className='cart-buy-button'>
+                <CartButton buying={buying}>
                   Volver al menú principal
-                </button>
+                </CartButton>
               </Link>
             </>
           ) : (
             <>
-              <h2 className='price-text'>
+              <h2 style={{ width: 250, textAlign: 'center' }}>
                 Precio total: ${cart.getTotalPrice!()}.
               </h2>
-              <button
-                onClick={handleOrder}
-                disabled={buying}
-                className={`cart-buy-button ${
-                  buying ? 'cart-buy-button-disabled' : ''
-                }`}
-              >
+              <CartButton buying={buying} onClick={handleOrder} disabled={buying}>
                 {buying ? 'Finalizando compra...' : 'Finalizar compra'}
-              </button>
+              </CartButton>
             </>
           )}
-        </div>
-      </div>
+        </PriceBuy>
+      </CartContainer>
     </>
   );
 };

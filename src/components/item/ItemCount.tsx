@@ -16,7 +16,7 @@ const ItemCount = ({ stock, initial, onAdd }: ItemCountProps) => {
   let addToCartDisabled = stock === 0;
   const navigate = useNavigate();
 
-  console.log(useLocation().pathname);
+  // console.log(useLocation().pathname);
 
   const removeFromAmount = (e: React.MouseEvent<HTMLElement>) => {
     if (e.stopPropagation) e.stopPropagation();

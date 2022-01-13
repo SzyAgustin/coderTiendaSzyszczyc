@@ -5,6 +5,11 @@ import ItemDetails from './ItemDetails';
 import { getDoc } from 'firebase/firestore';
 import styled from 'styled-components';
 
+const Text = styled.p`
+  width: 100%;
+  text-align: center;
+`;
+
 const ItemDetailContainer = () => {
   const [item, setItem] = useState<IItem | null>(null);
   const [loading, setLoading] = useState(true);
@@ -17,11 +22,6 @@ const ItemDetailContainer = () => {
       setLoading(false);
     });
   }, [id]);
-
-  const Text = styled.p`
-    width: 100%;
-    text-align: center;
-  `;
 
   {
     if (loading) {
