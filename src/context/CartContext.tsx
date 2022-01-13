@@ -1,9 +1,48 @@
-import React, { createContext, useContext, useState } from "react";
-import { NumericLiteral } from "typescript";
+import React, { createContext, useReducer, useState } from 'react';
 import { IItem } from '../services/ItemService';
 
+const addItem = (currentCartItems: IItemCart[], itemToAdd: IItemCart) => {
+  if (currentCartItems.some((item) => item.id === itemToAdd.id)) {
+    return currentCartItems.map((cartItem) => {
+      if (cartItem.id === itemToAdd.id)
+        return { ...cartItem, amount: cartItem.amount + itemToAdd.amount };
+      return cartItem;
+    });
+  }
+  return [...currentCartItems, itemToAdd];
+};
+
+const removeItem = (currentCartItems: IItemCart[], id: string) => {
+  return currentCartItems.filter((item) => item.id != id);
+};
+
+const initialState: ICartState = {
+  cartItems: [],
+};
+
+interface IAction {
+  type: string;
+  payload: any;
+}
+
+const reducer = (state: ICartState, action: IAction) => {
+  switch (action.type) {
+    case 'Add':
+      return { ...state, cartItems: addItem(state.cartItems, action.payload) };
+    case 'Remove':
+      return {
+        ...state,
+        cartItems: removeItem(state.cartItems, action.payload),
+      };
+    case 'Clear':
+      return { ...state, cartItems: [] };
+    default:
+      return state;
+  }
+};
+
 export interface IItemCart extends IItem {
-  amount: number
+  amount: number;
 }
 
 interface CartProviderProps {
@@ -11,65 +50,41 @@ interface CartProviderProps {
   children: any;
 }
 
-interface ICartContext {
-    cartItems: IItemCart[],
-    addItem?: (item: IItemCart) => void,
-    removeItem?: (id: string) => void,
-    clear?: () => void,
-    isInCart?: (id: string) => void,
-    getAmountInCart?: (id: string) => number,
-    getTotalPrice?: () => number
+interface ICartState {
+  cartItems: IItemCart[];
+  getAmountInCart?: (id: string) => number;
+  getTotalPrice?: () => number;
+  dispatch?: any;
 }
 
-const defaultState = {
-    cartItems: []
-}
-
-export const CartContext = createContext<ICartContext>(defaultState);
+export const CartContext = createContext<ICartState>(initialState);
 
 export const CartProvider = ({
   defaultValue = [],
   children,
 }: CartProviderProps) => {
-  const [cartItems, setCartItems] = useState(defaultValue);
-
-  const addItem = (item: IItemCart) => {
-    if (isInCart(item.id)) {
-      const modified = cartItems.map((cartItem) => {
-        if (cartItem.id === item.id)
-          return { ...cartItem, amount: cartItem.amount + item.amount };
-        return cartItem;
-      });
-      setCartItems(modified);
-      return;
-    }
-    setCartItems([...cartItems, item]);
-  };
-
-  const removeItem = (id: string) => {
-    setCartItems(cartItems.filter((item) => item.id != id));
-  };
-
-  const clear = () => {
-    setCartItems([]);
-  };
-
-  const isInCart = (id: string) => {
-    return cartItems.some((item) => item.id === id);
-  };
+  const [cartItemsStateeeeeeee, setCartItems] = useState(defaultValue);
+  const [cartState, dispatch] = useReducer(reducer, initialState);
 
   const getAmountInCart = (itemId: string) => {
-    const item = cartItems.find(item => item.id === itemId);
+    const item = cartState.cartItems.find((item) => item.id === itemId);
     return item ? item.amount : 0;
-  }
+  };
 
   const getTotalPrice = () => {
-    return cartItems.map(item => item.amount * item.price).reduce((prev, cur) => prev + cur);
-  }
+    return cartState.cartItems
+      .map((item) => item.amount * item.price)
+      .reduce((prev, cur) => prev + cur);
+  };
 
   return (
     <CartContext.Provider
-      value={{ cartItems, addItem, removeItem, clear, isInCart, getAmountInCart, getTotalPrice }}
+      value={{
+        cartItems: cartState.cartItems,
+        getAmountInCart,
+        getTotalPrice,
+        dispatch,
+      }}
     >
       {children}
     </CartContext.Provider>

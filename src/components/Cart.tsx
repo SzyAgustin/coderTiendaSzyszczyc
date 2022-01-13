@@ -53,7 +53,7 @@ const Cart = () => {
   const [buying, setBuying] = useState(false);
 
   const handleDelete = (id: string) => {
-    cart.removeItem!(id);
+    cart.dispatch!({type: 'Remove', payload: id});
   };
 
   const getReadyOrder = () => {
@@ -113,7 +113,7 @@ const Cart = () => {
         updateStock();
         setSuccess(true);
         setShowMessage(true);
-        cart.clear!();
+        cart.dispatch!({type: 'Clear'});
       })
       .catch((err) => {
         setSuccess(false);

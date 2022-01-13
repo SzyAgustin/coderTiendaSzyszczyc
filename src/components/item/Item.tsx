@@ -70,7 +70,7 @@ const Item = ({ item }: ItemProps) => {
 
   const add = (amountToAdd: number) => {
     setStock(stock - amountToAdd);
-    cart.addItem!({ ...item, amount: amountToAdd });
+    cart.dispatch!({type:'Add', payload: { ...item, amount: amountToAdd }});
   };
 
   const gotoItemDetails = () => {
