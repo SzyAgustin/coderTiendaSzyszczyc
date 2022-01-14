@@ -11,7 +11,8 @@
 // const arr = [producto1, producto2, producto3, producto4, producto5, producto6, producto7, producto8, producto9];
 
 import { db } from "./Firebase";
-import { collection, doc, query, where, Timestamp } from "firebase/firestore";
+import { collection, doc, query, where, Timestamp, writeBatch } from "firebase/firestore";
+import { IItemCart } from "../context/CartContext";
 
 export interface IBuyer {
   name: string,
@@ -45,9 +46,20 @@ export interface IItem {
 }
 
 export const getItems = (category: string | undefined) => {
-  return category ? query(collection(db, "ItemList"), where("category", "==", category)) : collection(db, "ItemList");
+  return category ? query(collection(db, "ItemList"), where("category", "==", category), where("stock", "!=", 0)) : query(collection(db, "ItemList"), where("stock", "!=", 0));
 }
 
 export const getItem = (itemId: string) => {
   return doc(db, "ItemList", itemId);
 }
+
+export const updateStock = async (cartItems: IItemCart[]) => {
+  const batch = writeBatch(db);
+  cartItems.forEach((item) => {
+    batch.update(
+      getItem(item.id),
+      { 'stock': item.stock - item.amount }
+    );
+  });
+  await batch.commit();
+};

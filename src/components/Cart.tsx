@@ -6,8 +6,8 @@ import { Timestamp, addDoc, writeBatch, Firestore } from 'firebase/firestore';
 import ResultMessage from './ResultMessage';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../services/Firebase';
-import { getOrderList } from '../services/OrderService';
-import { getItem } from '../services/ItemService';
+import { addOrder, getOrderList } from '../services/OrderService';
+import { getItem, updateStock } from '../services/ItemService';
 import styled from 'styled-components';
 import Button from './Button';
 
@@ -32,9 +32,10 @@ const Cart = () => {
   const [showMessage, setShowMessage] = useState(false);
   const [success, setSuccess] = useState(true);
   const [buying, setBuying] = useState(false);
+  const batch = writeBatch(db);
 
   const handleDelete = (id: string) => {
-    cart.dispatch!({type: 'Remove', payload: id});
+    cart.dispatch!({ type: 'Remove', payload: id });
   };
 
   const getReadyOrder = () => {
@@ -64,37 +65,14 @@ const Cart = () => {
     }, 3000);
   };
 
-  const updateStock = () => {
-    cart.cartItems.forEach((item) => {
-      writeBatch(db).update(
-        getItem(item.id),
-        'stock',
-        item.stock - item.amount //no esta haciendo el update y no entiendo por que...
-      );
-    });
-    writeBatch(db)
-      .commit()
-      .then((res) => {
-        console.log('succ');
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log('err');
-        console.log(err);
-      });
-  };
-
   const handleOrder = () => {
     setBuying(true);
-    const orderToAdd = getReadyOrder();
-    const orderList = getOrderList();
-
-    addDoc(orderList, orderToAdd)
-      .then((res) => {
-        updateStock();
+    addOrder(cart.cartItems)
+      .then(async (res) => {
+        await updateStock(cart.cartItems);
         setSuccess(true);
         setShowMessage(true);
-        cart.dispatch!({type: 'Clear'});
+        cart.dispatch!({ type: 'Clear' });
       })
       .catch((err) => {
         setSuccess(false);
@@ -118,7 +96,12 @@ const Cart = () => {
             <>
               <h1>No hay items en el carrito</h1>
               <Link to='/'>
-                <Button fontSize={20} primary={true} width='260px' heigth='50px'>
+                <Button
+                  fontSize={20}
+                  primary={true}
+                  width='260px'
+                  heigth='50px'
+                >
                   Volver al menú principal
                 </Button>
               </Link>
@@ -128,7 +111,14 @@ const Cart = () => {
               <h2 style={{ width: 250, textAlign: 'center' }}>
                 Precio total: ${cart.getTotalPrice!()}.
               </h2>
-              <Button fontSize={20} primary={true} width='260px' heigth='50px' onClick={handleOrder} disabled={buying}>
+              <Button
+                fontSize={20}
+                primary={true}
+                width='260px'
+                heigth='50px'
+                onClick={handleOrder}
+                disabled={buying}
+              >
                 {buying ? 'Finalizando compra...' : 'Finalizar compra'}
               </Button>
             </>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../Button';
@@ -84,6 +84,12 @@ const ItemCount = ({ stock, initial, onAdd }: ItemCountProps) => {
   let addToCartDisabled = stock === 0;
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (stock === 0){
+      setAmountSelected(0);
+    }
+  }, [stock]);
+
   const removeFromAmount = (e: React.MouseEvent<HTMLElement>) => {
     if (e.stopPropagation) e.stopPropagation();
     setAmountSelected(amountSelected - 1);
@@ -137,7 +143,9 @@ const ItemCount = ({ stock, initial, onAdd }: ItemCountProps) => {
         Stock: {stock} {stock === 1 ? 'unidad' : 'unidades'}.
       </Stock>
       {useLocation().pathname.includes('item') && (
-        <Button primary={true} onClick={buyNow} marginTop={10}>Comprar ahora</Button>
+        <Button primary={true} onClick={buyNow} marginTop={10}>
+          Comprar ahora
+        </Button>
       )}
     </ItemCountContainer>
   );

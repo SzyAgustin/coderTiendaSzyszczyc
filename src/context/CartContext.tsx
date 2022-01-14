@@ -46,7 +46,6 @@ export interface IItemCart extends IItem {
 }
 
 interface CartProviderProps {
-  defaultValue?: IItemCart[];
   children: any;
 }
 
@@ -60,10 +59,8 @@ interface ICartState {
 export const CartContext = createContext<ICartState>(initialState);
 
 export const CartProvider = ({
-  defaultValue = [],
   children,
 }: CartProviderProps) => {
-  const [cartItemsStateeeeeeee, setCartItems] = useState(defaultValue);
   const [cartState, dispatch] = useReducer(reducer, initialState);
 
   const getAmountInCart = (itemId: string) => {
