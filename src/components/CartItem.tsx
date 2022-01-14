@@ -57,7 +57,7 @@ const CartItem = ({ item, onDelete }: CartItemProps) => {
       <CartItemTitle>{item.title}</CartItemTitle>
       <div style={{ margin: '0 auto', flexBasis: '25%' }}>
         <DeleteButton onClick={handleDelete}>Eliminar</DeleteButton>
-        <p style={{ fontSize: 13, color: 'rgb(88, 88, 88)' }}>
+        <p style={{ fontSize: 13, color: 'rgb(88, 88, 88)', margin: 0 }}>
           Cantidad: {item.amount}
         </p>
       </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-let classNames = require('classnames');
+import Button from '../Button';
 
 interface ItemCountProps {
   stock: number;
@@ -20,24 +20,6 @@ const Stock = styled.p`
   color: gray;
   font-size: 13px;
   margin: 0;
-`;
-
-const BuyButton = styled.button`
-  margin-top: 15px;
-  border: none;
-  height: 40px;
-  width: 100%;
-  border-radius: 5px;
-  background-color: rgb(185, 19, 19);
-  color: white;
-  cursor: pointer;
-  transition: 0.1s;
-  font-size: 16px;
-
-  &:hover {
-    background-color: red;
-    transition: 0.2s;
-  }
 `;
 
 interface AmountContainerProps {
@@ -79,18 +61,18 @@ const AmountButtonMinus = styled(AmountButton)`
 const AddToCartButton = styled.button`
   width: 100%;
   height: 40px;
-  border: 2px solid ${p => p.disabled ? 'gray' : 'rgb(185, 19, 19)'};
+  border: 2px solid ${(p) => (p.disabled ? 'gray' : 'rgb(185, 19, 19)')};
   background-color: #fff;
-  cursor: ${p => p.disabled ? 'not-allowed' : 'pointer'};
+  cursor: ${(p) => (p.disabled ? 'not-allowed' : 'pointer')};
   border-radius: 5px;
-  color: ${p => p.disabled ? 'gray' : 'rgb(185, 19, 19)'};
+  color: ${(p) => (p.disabled ? 'gray' : 'rgb(185, 19, 19)')};
   transition: 0.2s;
   margin: 5px 0;
   user-select: none;
 
   &:hover {
-    color: ${p => p.disabled ? 'gray' : 'red'};
-    border-color: ${p => p.disabled ? 'gray' : 'red'};
+    color: ${(p) => (p.disabled ? 'gray' : 'red')};
+    border-color: ${(p) => (p.disabled ? 'gray' : 'red')};
     transition: 0.4s;
   }
 `;
@@ -148,17 +130,14 @@ const ItemCount = ({ stock, initial, onAdd }: ItemCountProps) => {
         )}
       </AmountContainer>
 
-      <AddToCartButton
-        onClick={add}
-        disabled={addToCartDisabled}
-      >
+      <Button onClick={add} disabled={addToCartDisabled} marginTop={8}>
         Agregar al carrito
-      </AddToCartButton>
+      </Button>
       <Stock>
         Stock: {stock} {stock === 1 ? 'unidad' : 'unidades'}.
       </Stock>
       {useLocation().pathname.includes('item') && (
-        <BuyButton onClick={buyNow}>Comprar ahora</BuyButton>
+        <Button primary={true} onClick={buyNow} marginTop={10}>Comprar ahora</Button>
       )}
     </ItemCountContainer>
   );
