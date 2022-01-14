@@ -9,6 +9,7 @@ import { db } from '../services/Firebase';
 import { getOrderList } from '../services/OrderService';
 import { getItem } from '../services/ItemService';
 import styled from 'styled-components';
+import Button from './Button';
 
 const CartContainer = styled.div`
   width: 80%;
@@ -23,26 +24,6 @@ const PriceBuy = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-`;
-
-interface CartButtonProps {
-  buying: boolean
-}
-const CartButton = styled.button<CartButtonProps>`
-  border: none;
-  height: 50px;
-  width: 260px;
-  border-radius: 5px;
-  background-color: ${props => props.buying ? 'gray' : 'rgb(185, 19, 19)'};
-  color: white;
-  cursor: pointer;
-  transition: 0.1s;
-  font-size: 20px;
-
-  &:hover {
-    background-color: ${props => props.buying ? 'gray' : 'red'};
-    transition: 0.2s;
-  }
 `;
 
 const Cart = () => {
@@ -137,9 +118,9 @@ const Cart = () => {
             <>
               <h1>No hay items en el carrito</h1>
               <Link to='/'>
-                <CartButton buying={buying}>
+                <Button fontSize={20} primary={true} width='260px' heigth='50px'>
                   Volver al menú principal
-                </CartButton>
+                </Button>
               </Link>
             </>
           ) : (
@@ -147,9 +128,9 @@ const Cart = () => {
               <h2 style={{ width: 250, textAlign: 'center' }}>
                 Precio total: ${cart.getTotalPrice!()}.
               </h2>
-              <CartButton buying={buying} onClick={handleOrder} disabled={buying}>
+              <Button fontSize={20} primary={true} width='260px' heigth='50px' onClick={handleOrder} disabled={buying}>
                 {buying ? 'Finalizando compra...' : 'Finalizar compra'}
-              </CartButton>
+              </Button>
             </>
           )}
         </PriceBuy>

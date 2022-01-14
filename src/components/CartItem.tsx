@@ -1,6 +1,7 @@
 import React from 'react';
 import { IItemCart } from '../context/CartContext';
 import styled from 'styled-components';
+import Button from './Button';
 
 interface CartItemProps {
   item: IItemCart;
@@ -23,24 +24,6 @@ const CartItemTitle = styled.div`
   flex-basis: 50%;
 `;
 
-const DeleteButton = styled.button`
-  margin-top: 23px;
-  border-radius: 3px;
-  border: 1px solid rgb(185, 19, 19);
-  width: 110px;
-  height: 25px;
-  background-color: white;
-  color: rgb(185, 19, 19);
-  margin-bottom: 3px;
-  cursor: pointer;
-  transition: 0.1s;
-
-  &:hover {
-    border: 1px solid red;
-    color: red;
-  }
-`;
-
 const ItemPrice = styled.div`
   font-size: 30px;
   font-weight: 700;
@@ -56,7 +39,7 @@ const CartItem = ({ item, onDelete }: CartItemProps) => {
     <CartItemContainer>
       <CartItemTitle>{item.title}</CartItemTitle>
       <div style={{ margin: '0 auto', flexBasis: '25%' }}>
-        <DeleteButton onClick={handleDelete}>Eliminar</DeleteButton>
+        <Button width='110px' heigth='25px' fontSize={13} marginTop={20} onClick={handleDelete}>Eliminar</Button>
         <p style={{ fontSize: 13, color: 'rgb(88, 88, 88)', margin: 0 }}>
           Cantidad: {item.amount}
         </p>

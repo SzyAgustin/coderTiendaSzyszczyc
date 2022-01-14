@@ -2,10 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 
 interface ButtonProps {
-  heigth?: number;
-  width?: number;
+  heigth?: string;
+  width?: string;
   primary?: boolean;
   marginTop?: number;
+  fontSize?: number;
 }
 
 const Button = styled.button<ButtonProps>`
@@ -18,7 +19,7 @@ const Button = styled.button<ButtonProps>`
   color: ${(p) => getTextColor(p.disabled, p.primary)};
   cursor: pointer;
   transition: 0.1s;
-  font-size: 16px;
+  font-size: ${p => (p.fontSize || 16) + 'px'};;
   ${(p) => getBorder(p.disabled, p.primary)};
 
   &:hover {
