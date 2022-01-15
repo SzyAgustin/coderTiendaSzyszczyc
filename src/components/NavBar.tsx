@@ -1,6 +1,6 @@
 import React from 'react';
 import Logo from '../images/logo.png';
-import CartWidget from './CartWidget';
+import CartWidget from './cart/CartWidget';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 

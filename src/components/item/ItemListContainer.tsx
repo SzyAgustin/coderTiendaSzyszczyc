@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import ItemList from './ItemList';
 import { useParams } from 'react-router-dom';
 import { getItems, IItem } from '../../services/ItemService';
 import { getDocs } from 'firebase/firestore';
 import styled from 'styled-components';
+import Item from './Item';
 
 const ListContainer = styled.div`
   padding-top: 20px;
@@ -34,7 +34,11 @@ const ItemListContainer = () => {
 
   return (
     <ListContainer>
-      {loading ? <p>Loading Items...</p> : <ItemList items={items} />}
+      {loading ? (
+        <p>Loading Items...</p>
+      ) : (
+        items.map((item) => <Item key={item.id} item={item} />)
+      )}
     </ListContainer>
   );
 };

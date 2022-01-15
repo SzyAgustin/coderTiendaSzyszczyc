@@ -65,11 +65,7 @@ const ItemDetails = ({ item }: ItemDetailsProps) => {
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'contain',
   };
-
-  const buyNow = () => {
-    // add()
-  };
-
+  
   return (
     <DetailsContainer>
       <Main>

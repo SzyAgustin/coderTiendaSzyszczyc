@@ -1,7 +1,7 @@
 import React from 'react';
-import { IItemCart } from '../context/CartContext';
+import { IItemCart } from '../../context/CartContext';
 import styled from 'styled-components';
-import Button from './Button';
+import Button from '../Button';
 
 interface CartItemProps {
   item: IItemCart;

@@ -1,15 +1,15 @@
 import React, { useContext, useState } from 'react';
-import { CartContext } from '../context/CartContext';
+import { CartContext } from '../../context/CartContext';
 import { Link } from 'react-router-dom';
 import CartItem from './CartItem';
 import { Timestamp, addDoc, writeBatch, Firestore } from 'firebase/firestore';
-import ResultMessage from './ResultMessage';
+import ResultMessage from '../ResultMessage';
 import { useNavigate } from 'react-router-dom';
-import { db } from '../services/Firebase';
-import { addOrder, getOrderList } from '../services/OrderService';
-import { getItem, updateStock } from '../services/ItemService';
+import { db } from '../../services/Firebase';
+import { addOrder, getOrderList } from '../../services/OrderService';
+import { getItem, updateStock } from '../../services/ItemService';
 import styled from 'styled-components';
-import Button from './Button';
+import Button from '../Button';
 
 const CartContainer = styled.div`
   width: 80%;

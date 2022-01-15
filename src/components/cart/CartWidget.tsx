@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import CartIcon from '../images/cartIcon.png';
-import { CartContext } from '../context/CartContext';
+import CartIcon from '../../images/cartIcon.png';
+import { CartContext } from '../../context/CartContext';
 import styled from 'styled-components';
 
 const WidgetContainer = styled.div`
