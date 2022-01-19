@@ -54,6 +54,11 @@ const NavBar = () => {
           Libros
         </NavBarLink>
       </div>
+      <div>
+        <NavBarLink className={navItemClass} to='/addItem'>
+          Add new item
+        </NavBarLink>
+      </div>
       <CartLink to='/cart'>
         <CartWidget />
       </CartLink>

@@ -11,7 +11,7 @@
 // const arr = [producto1, producto2, producto3, producto4, producto5, producto6, producto7, producto8, producto9];
 
 import { db } from "./Firebase";
-import { collection, doc, query, where, Timestamp, writeBatch } from "firebase/firestore";
+import { collection, doc, query, where, Timestamp, writeBatch, addDoc } from "firebase/firestore";
 import { IItemCart } from "../context/CartContext";
 
 export interface IBuyer {
@@ -34,9 +34,7 @@ export interface IOrder {
   total: number
 }
 
-
-export interface IItem {
-  id: string;
+export interface ILocalItem {
   title: string;
   pictureUrl: string;
   description: string;
@@ -45,8 +43,21 @@ export interface IItem {
   category: string;
 }
 
+export interface IItem  extends ILocalItem {
+  id: string;
+}
+
 export const getItems = (category: string | undefined) => {
   return category ? query(collection(db, "ItemList"), where("category", "==", category), where("stock", "!=", 0)) : query(collection(db, "ItemList"), where("stock", "!=", 0));
+}
+
+export const getItemList = () => {
+  return collection(db, "ItemList");
+}
+
+export const addItem = (item: ILocalItem) => {
+  const itemList = getItemList();
+  return addDoc(itemList, item);
 }
 
 export const getItem = (itemId: string) => {
