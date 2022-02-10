@@ -4,6 +4,9 @@ import styled from 'styled-components';
 interface ResultMessageProps {
   visible: boolean;
   success: boolean;
+  message: string;
+  resultId?: string;
+  withRedirect: boolean;
 }
 
 interface ResultBoxProps {
@@ -27,12 +30,20 @@ const ResultBox = styled.div<ResultBoxProps>`
   opacity: ${(p) => (p.visible ? 1 : 0)};
   transition: 1s;
 `;
-const ResultMessage = ({ visible, success }: ResultMessageProps) => {
+const ResultMessage = ({
+  visible,
+  success,
+  resultId,
+  withRedirect,
+  message
+}: ResultMessageProps) => {
   return (
     <ResultBox visible={visible} success={success}>
       <p style={{ margin: 30 }}>
         {success
-          ? 'La orden se ha creado con exito. Serás redirigido a la pantalla principal.'
+          ? `${message}${
+              resultId ? ' El id de la orden es: ' + resultId : ''
+            }${withRedirect ? ' Serás redirigido a la pantalla principal' : ''}`
           : 'Ups... ocurrió un error. Intenta nuevamente.'}
       </p>
     </ResultBox>

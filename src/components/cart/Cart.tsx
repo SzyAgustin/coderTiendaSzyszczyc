@@ -32,6 +32,7 @@ const Cart = () => {
   const [showMessage, setShowMessage] = useState(false);
   const [success, setSuccess] = useState(true);
   const [buying, setBuying] = useState(false);
+  const [orderId, setOrderId] = useState<string | undefined>(undefined);
   const batch = writeBatch(db);
 
   const handleDelete = (id: string) => {
@@ -69,6 +70,7 @@ const Cart = () => {
     setBuying(true);
     addOrder(cart.cartItems)
       .then(async (res) => {
+        setOrderId(res.id);
         await updateStock(cart.cartItems);
         setSuccess(true);
         setShowMessage(true);
@@ -79,17 +81,16 @@ const Cart = () => {
         setShowMessage(true);
       })
       .finally(() => {
-        timeoutRedirect();
         setBuying(false);
       });
   };
 
   return (
     <>
-      <ResultMessage visible={showMessage} success={success} />
+      <ResultMessage message='La orden se ha creado con exito' withRedirect={false} visible={showMessage} success={success} resultId={orderId} />
       <CartContainer>
         {cart.cartItems.map((item) => (
-          <CartItem item={item} onDelete={handleDelete}></CartItem>
+          <CartItem item={item} key={item.id} onDelete={handleDelete}></CartItem>
         ))}
         <PriceBuy>
           {cart.cartItems.length === 0 ? (

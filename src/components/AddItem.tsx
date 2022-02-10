@@ -92,7 +92,7 @@ const AddItem = () => {
 
   return (
     <AddItemContainer>
-      <ResultMessage visible={showMessage} success={success} />
+      <ResultMessage message='El item se ha agregado con exito.' visible={showMessage} success={success} withRedirect={true} />
       <TitleContainer>Add new item</TitleContainer>
       <Formik
         onSubmit={onSubmit}
