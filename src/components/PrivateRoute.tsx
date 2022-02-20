@@ -8,7 +8,6 @@ interface PrivateRouteProps {
 
 const PrivateRoute = ({ children }: PrivateRouteProps) => {
   const { user } = useContext(UserContext);
-  console.log(user)
   return !user ? <Navigate to='/signIn' /> : children;
 };
 

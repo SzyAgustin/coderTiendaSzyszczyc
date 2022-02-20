@@ -2,12 +2,9 @@ import React, { useContext, useState } from 'react';
 import { CartContext } from '../../context/CartContext';
 import { Link } from 'react-router-dom';
 import CartItem from './CartItem';
-import { Timestamp, addDoc, writeBatch, Firestore } from 'firebase/firestore';
 import ResultMessage from '../ResultMessage';
-import { useNavigate } from 'react-router-dom';
-import { db } from '../../services/Firebase';
-import { addOrder, getOrderList } from '../../services/OrderService';
-import { getItem, updateStock } from '../../services/ItemService';
+import { addOrder } from '../../services/OrderService';
+import { updateStock } from '../../services/ItemService';
 import styled from 'styled-components';
 import Button from '../Button';
 import { UserContext } from '../../context/UserContext';
@@ -29,12 +26,10 @@ const PriceBuy = styled.div`
 
 const Cart = () => {
   const cart = useContext(CartContext);
-  const navigate = useNavigate();
   const [showMessage, setShowMessage] = useState(false);
   const [success, setSuccess] = useState(true);
   const [buying, setBuying] = useState(false);
   const [orderId, setOrderId] = useState<string | undefined>(undefined);
-  const batch = writeBatch(db);
   const { user } = useContext(UserContext);
 
   const handleDelete = (id: string) => {

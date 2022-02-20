@@ -45,6 +45,7 @@ const SignIn = () => {
           email: res.user.email,
           uid: res.user.uid,
         })
+        localStorage.setItem('ecommerce-user', `${res.user.displayName};${res.user.email};${res.user.uid}`)
         navigate("/")
       })
       .catch((err) => {
