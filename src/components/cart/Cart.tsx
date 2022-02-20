@@ -63,7 +63,7 @@ const Cart = () => {
   return (
     <>
       <ResultMessage
-        message='La orden se ha creado con exito'
+        message='La orden se ha creado con exito.'
         withRedirect={false}
         visible={showMessage}
         success={success}
