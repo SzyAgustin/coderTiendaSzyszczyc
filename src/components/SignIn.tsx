@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { getFirebase } from './../services/Firebase';
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { authentication } from './../services/Firebase';
 import Button from './Button';
+import { UserContext } from '../context/UserContext';
+import { useNavigate } from 'react-router-dom'
 
 const AddItemContainer = styled.div`
   width: 80%;
@@ -33,11 +34,18 @@ const TitleContainer = styled.div`
 `;
 
 const SignIn = () => {
+  const navigate = useNavigate();
+  const { setUser} = useContext(UserContext);
   const provider = new GoogleAuthProvider();
   const signInWithGoogle = () => {
     signInWithPopup(authentication, provider)
       .then((res) => {
-        console.log(res);
+        setUser({
+          displayName: res.user.displayName,
+          email: res.user.email,
+          uid: res.user.uid,
+        })
+        navigate("/")
       })
       .catch((err) => {
         console.log(err);

@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useState } from 'react';
+import React, { createContext, useReducer } from 'react';
 import { IItem } from '../services/ItemService';
 
 const addItem = (currentCartItems: IItemCart[], itemToAdd: IItemCart) => {

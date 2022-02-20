@@ -10,6 +10,7 @@ import { addOrder, getOrderList } from '../../services/OrderService';
 import { getItem, updateStock } from '../../services/ItemService';
 import styled from 'styled-components';
 import Button from '../Button';
+import { UserContext } from '../../context/UserContext';
 
 const CartContainer = styled.div`
   width: 80%;
@@ -34,41 +35,15 @@ const Cart = () => {
   const [buying, setBuying] = useState(false);
   const [orderId, setOrderId] = useState<string | undefined>(undefined);
   const batch = writeBatch(db);
+  const { user } = useContext(UserContext);
 
   const handleDelete = (id: string) => {
     cart.dispatch!({ type: 'Remove', payload: id });
   };
 
-  const getReadyOrder = () => {
-    const cartOrderedItems = cart.cartItems.map((item) => {
-      return {
-        price: item.price,
-        amount: item.amount,
-        id: item.id,
-        title: item.title,
-      };
-    }); // is there a better way to do this???
-    return {
-      buyer: {
-        name: 'User Name',
-        email: 'user.mail@gmail.com',
-        phone: 1122334455,
-      },
-      items: cartOrderedItems,
-      date: Timestamp.fromDate(new Date()),
-      total: cart.getTotalPrice!(),
-    };
-  };
-
-  const timeoutRedirect = () => {
-    setTimeout(function () {
-      navigate('/');
-    }, 3000);
-  };
-
   const handleOrder = () => {
     setBuying(true);
-    addOrder(cart.cartItems)
+    addOrder(cart.cartItems, user!)
       .then(async (res) => {
         setOrderId(res.id);
         await updateStock(cart.cartItems);
@@ -87,10 +62,20 @@ const Cart = () => {
 
   return (
     <>
-      <ResultMessage message='La orden se ha creado con exito' withRedirect={false} visible={showMessage} success={success} resultId={orderId} />
+      <ResultMessage
+        message='La orden se ha creado con exito'
+        withRedirect={false}
+        visible={showMessage}
+        success={success}
+        resultId={orderId}
+      />
       <CartContainer>
         {cart.cartItems.map((item) => (
-          <CartItem item={item} key={item.id} onDelete={handleDelete}></CartItem>
+          <CartItem
+            item={item}
+            key={item.id}
+            onDelete={handleDelete}
+          ></CartItem>
         ))}
         <PriceBuy>
           {cart.cartItems.length === 0 ? (
