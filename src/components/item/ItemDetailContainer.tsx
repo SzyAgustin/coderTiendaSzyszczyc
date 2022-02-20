@@ -23,10 +23,8 @@ const ItemDetailContainer = () => {
     });
   }, [id]);
 
-  {
-    if (loading) {
-      return <Text>Loading item... </Text>;
-    }
+  if (loading) {
+    return <Text>Loading item... </Text>;
   }
 
   return (

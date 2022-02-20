@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form } from 'formik';
 import { addItem, ILocalItem } from '../services/ItemService';
 import * as Yup from 'yup';
 import Input from './formItems/Input';

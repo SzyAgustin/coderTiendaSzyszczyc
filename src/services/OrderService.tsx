@@ -2,7 +2,6 @@ import { db } from './Firebase';
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import { IItemCart } from '../context/CartContext';
 import { IUser } from '../context/UserContext';
-import { useContext } from 'react';
 
 export const getOrderList = () => {
   return collection(db, 'Orders');

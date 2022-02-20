@@ -58,25 +58,6 @@ const AmountButtonMinus = styled(AmountButton)`
   margin-bottom: 2px;
 `;
 
-const AddToCartButton = styled.button`
-  width: 100%;
-  height: 40px;
-  border: 2px solid ${(p) => (p.disabled ? 'gray' : 'rgb(185, 19, 19)')};
-  background-color: #fff;
-  cursor: ${(p) => (p.disabled ? 'not-allowed' : 'pointer')};
-  border-radius: 5px;
-  color: ${(p) => (p.disabled ? 'gray' : 'rgb(185, 19, 19)')};
-  transition: 0.2s;
-  margin: 5px 0;
-  user-select: none;
-
-  &:hover {
-    color: ${(p) => (p.disabled ? 'gray' : 'red')};
-    border-color: ${(p) => (p.disabled ? 'gray' : 'red')};
-    transition: 0.4s;
-  }
-`;
-
 const ItemCount = ({ stock, initial, onAdd }: ItemCountProps) => {
   const [amountSelected, setAmountSelected] = React.useState(initial);
   let minusDisabled = amountSelected <= 1;

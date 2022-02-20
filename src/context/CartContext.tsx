@@ -13,7 +13,7 @@ const addItem = (currentCartItems: IItemCart[], itemToAdd: IItemCart) => {
 };
 
 const removeItem = (currentCartItems: IItemCart[], id: string) => {
-  return currentCartItems.filter((item) => item.id != id);
+  return currentCartItems.filter((item) => item.id !== id);
 };
 
 const initialState: ICartState = {

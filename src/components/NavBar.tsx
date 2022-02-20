@@ -68,7 +68,7 @@ const NavBar = () => {
       )}
       <NavBarContainer>
         <NavLink to='/'>
-          <img style={{ height: 100, cursor: 'pointer' }} src={Logo}></img>
+          <img style={{ height: 100, cursor: 'pointer' }} alt="logo" src={Logo}></img>
         </NavLink>
         {user && (
           <>
