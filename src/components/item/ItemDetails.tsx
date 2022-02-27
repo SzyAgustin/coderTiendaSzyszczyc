@@ -1,8 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { IItem } from '../../services/ItemService';
 import ItemCount from './ItemCount';
 import { CartContext } from '../../context/CartContext';
 import styled from 'styled-components';
+import { ref, getDownloadURL } from 'firebase/storage';
+import { storage } from '../../services/Firebase';
 
 interface ItemDetailsProps {
   item: IItem;
@@ -50,14 +52,21 @@ const ItemDetails = ({ item }: ItemDetailsProps) => {
   const [stock, setStock] = React.useState(
     item.stock - cart.getAmountInCart!(item.id)
   );
+  const [imageUrl, setImageUrl] = useState('')
+
+  useEffect(() => {
+    getDownloadURL(ref(storage, `images/${item.pictureUrl}`)).then(url => {
+      setImageUrl(url)
+    })
+  }, [])
 
   const add = (amountToAdd: number) => {
     setStock(stock - amountToAdd);
-    cart.dispatch!({type:'Add', payload: { ...item, amount: amountToAdd }});
+    cart.dispatch!({ type: 'Add', payload: { ...item, amount: amountToAdd } });
   };
 
   const imageStyle = {
-    backgroundImage: `url(${item.pictureUrl})`,
+    backgroundImage: `url(${imageUrl})`,
     width: '70%',
     height: '70%',
     padding: '5%',
@@ -65,7 +74,7 @@ const ItemDetails = ({ item }: ItemDetailsProps) => {
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'contain',
   };
-  
+
   return (
     <DetailsContainer>
       <Main>

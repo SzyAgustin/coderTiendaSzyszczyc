@@ -1,9 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import ItemCount from './ItemCount';
 import { IItem } from '../../services/ItemService';
 import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../../context/CartContext';
 import styled from 'styled-components';
+import { getDownloadURL, ref } from 'firebase/storage';
+import { storage } from '../../services/Firebase';
 
 interface ItemProps {
   item: IItem;
@@ -68,6 +70,14 @@ const Item = ({ item }: ItemProps) => {
   );
   const navigate = useNavigate();
 
+  const [imageUrl, setImageUrl] = useState('')
+
+  useEffect(() => {
+    getDownloadURL(ref(storage, `images/${item.pictureUrl}`)).then(url => {
+      setImageUrl(url)
+    })
+  }, [])
+
   const add = (amountToAdd: number) => {
     setStock(stock - amountToAdd);
     cart.dispatch!({type:'Add', payload: { ...item, amount: amountToAdd }});
@@ -83,7 +93,7 @@ const Item = ({ item }: ItemProps) => {
         <Title>{item.title}</Title>
       </TitleContainer>
       <ImageContainer>
-        <img style={{ width: 100 }} src={item.pictureUrl} alt='' />
+        <img style={{ width: 100 }} src={imageUrl} alt='' />
       </ImageContainer>
       <ItemCountContainer>
         <ItemCount stock={stock} initial={1} onAdd={add} />
