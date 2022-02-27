@@ -9,7 +9,7 @@ In the Main page the user will see the entire list of products available to buy,
 Using Google Authenticator, and private routes to secure all routes that need a logged in user. This information is stored in a context, so it is shared across the application to be used where needed. The user is saved in Local Storage to allow users to leave the application and come back for a better user experience. Also, the user can sign out at any time, which removes the user from the Context and the Local Storage.
 
 ## Item Creation
-In the "Add new item" view, users can add new items to sell. The form is created with the Formic library, and validations were added with the Yup library.
+In the "Add new item" view, users can add new items to sell. The form is created with the Formic library, and validations were added with the Yup library. The images are being saved to, uploaded on and downloaded from Firebase Storage.
 
 ## Cart
 The cart information is stored in a context, and shared with all the tree. 
