@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import ResultMessage from './ResultMessage';
 import { storage } from '../services/Firebase';
 import { ref, uploadBytes } from 'firebase/storage';
-// import FileInput from './formItems/FileInput';
+import FileInput from './formItems/FileInput';
 
 const TitleContainer = styled.div`
   height: 60px;
@@ -29,10 +29,6 @@ const AddItemContainer = styled.div`
   box-sizing: border-box;
   border-radius: 10px;
   box-shadow: 0 0px 5px 0px rgba(0, 0, 0, 0.2);
-`;
-
-const FileInput = styled.input`
-  color: 'red';
 `;
 
 const AddItem = () => {
@@ -56,16 +52,25 @@ const AddItem = () => {
     }, 3000);
   };
 
-  const updateFile = async () => {
-    const fileRef = ref(storage, `images/${fileToUpdate?.name}`);
+  function createGuid() {
+    function _p8(s: any) {
+      var p = (Math.random().toString(16) + '000000000').substr(2, 8);
+      return s ? '-' + p.substr(0, 4) + '-' + p.substr(4, 4) : p;
+    }
+    return _p8(null) + _p8(true) + _p8(true) + _p8(null);
+  }
+
+  const uploadFile = async (name: string) => {
+    const fileRef = ref(storage, `images/${name}`);
     await uploadBytes(fileRef, fileToUpdate!);
   };
 
   const onSubmit = (item: ILocalItem) => {
-    console.log(item);
     if (!fileToUpdate) return;
     setInProgress(true);
-    updateFile().then((res) => {
+    item.pictureUrl =
+      createGuid() + '.' + item.pictureUrl.split('.').reverse()[0];
+    uploadFile(item.pictureUrl).then((res) => {
       addItem(item)
         .then(async (res) => {
           setSuccess(true);
@@ -84,7 +89,7 @@ const AddItem = () => {
   const validationSchema = Yup.object({
     category: Yup.string().required('Required'),
     description: Yup.string().required('Required'),
-    // pictureUrl: Yup.string().required('Required'),
+    pictureUrl: Yup.string().required('Required'),
     price: Yup.number()
       .integer()
       .min(1, 'Specify a price')
@@ -140,13 +145,13 @@ const AddItem = () => {
           <Form style={{ paddingLeft: 10 }}>
             <Input name='title' label='Title' />
             <Input name='description' label='Description' />
-            {/* <Input name='pictureUrl' label='Picture URL' /> */}
             <FileInput
-              type='file'
+              label='Pick an Image'
               name='pictureUrl'
-              onChange={(e) => handleFileChange(e, formik)}
+              handleSelection={handleFileChange}
+              formik={formik}
+              selected={formik.values.pictureUrl}
             />
-            {/* <FileInput name='pictureUrl' label='Image File' onChange={(e) => handleFileChange(e, formik)}/> */}
             <Select name='category' label='Category' options={categories} />
             <Input name='price' type='number' label='Price' />
             <Input name='stock' type='number' label='Initial Stock' />
