@@ -16,3 +16,6 @@ The cart information is stored in a context, and shared with all the tree.
 
 ## Styles
 All styles were created mannually, using Styled Components.
+
+## Author
+Agustin Federico Szyszczyc.  https://github.com/szyagustin.
