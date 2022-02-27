@@ -34,6 +34,7 @@ const Aside = styled.div`
   box-sizing: border-box;
   padding: 2%;
   min-width: 250px;
+  width: 360px;
   border: 1px solid #bbb;
   border-radius: 10px;
   margin: 15px;
