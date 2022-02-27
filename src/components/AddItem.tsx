@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Formik, Form } from 'formik';
+import { Formik, Form, FormikProps } from 'formik';
 import { addItem, ILocalItem } from '../services/ItemService';
 import * as Yup from 'yup';
 import Input from './formItems/Input';
@@ -8,6 +8,9 @@ import Button from './Button';
 import Select from './formItems/Select';
 import { useNavigate } from 'react-router-dom';
 import ResultMessage from './ResultMessage';
+import { storage } from '../services/Firebase';
+import { ref, uploadBytes } from 'firebase/storage';
+// import FileInput from './formItems/FileInput';
 
 const TitleContainer = styled.div`
   height: 60px;
@@ -28,6 +31,10 @@ const AddItemContainer = styled.div`
   box-shadow: 0 0px 5px 0px rgba(0, 0, 0, 0.2);
 `;
 
+const FileInput = styled.input`
+  color: 'red';
+`;
+
 const AddItem = () => {
   const initialValues: ILocalItem = {
     category: '',
@@ -41,6 +48,7 @@ const AddItem = () => {
   const [showMessage, setShowMessage] = useState(false);
   const [inProgress, setInProgress] = useState(false);
   const navigate = useNavigate();
+  let fileToUpdate: File | null = null;
 
   const timeoutRedirect = () => {
     setTimeout(function () {
@@ -48,27 +56,43 @@ const AddItem = () => {
     }, 3000);
   };
 
+  const updateFile = async () => {
+    const fileRef = ref(storage, `images/${fileToUpdate?.name}`);
+    await uploadBytes(fileRef, fileToUpdate!);
+  };
+
   const onSubmit = (item: ILocalItem) => {
+    console.log(item);
+    if (!fileToUpdate) return;
     setInProgress(true);
-    addItem(item).then(async (res) => {
-      setSuccess(true);
-      setShowMessage(true);
-    })
-    .catch((err) => {
-      setSuccess(false);
-      setShowMessage(true);
-    })
-    .finally(() => {
-      timeoutRedirect();
-    });;
+    updateFile().then((res) => {
+      addItem(item)
+        .then(async (res) => {
+          setSuccess(true);
+          setShowMessage(true);
+        })
+        .catch((err) => {
+          setSuccess(false);
+          setShowMessage(true);
+        })
+        .finally(() => {
+          timeoutRedirect();
+        });
+    });
   };
 
   const validationSchema = Yup.object({
     category: Yup.string().required('Required'),
     description: Yup.string().required('Required'),
-    pictureUrl: Yup.string().required('Required'),
-    price: Yup.number().integer().min(1, 'Specify a price').required('Required'),
-    stock: Yup.number().integer().min(1, 'Specify a stock amount').required('Required'),
+    // pictureUrl: Yup.string().required('Required'),
+    price: Yup.number()
+      .integer()
+      .min(1, 'Specify a price')
+      .required('Required'),
+    stock: Yup.number()
+      .integer()
+      .min(1, 'Specify a stock amount')
+      .required('Required'),
     title: Yup.string().required('Required'),
   });
 
@@ -90,9 +114,22 @@ const AddItem = () => {
     { key: 'Libro', value: 'Libro' },
   ];
 
+  const handleFileChange = (e: any, formik: FormikProps<ILocalItem>) => {
+    fileToUpdate = e.target.files ? e.target.files[0] : null;
+    formik.setFieldValue(
+      'pictureUrl',
+      e.target.files ? e.target.files[0].name : ''
+    );
+  };
+
   return (
     <AddItemContainer>
-      <ResultMessage message='El item se ha agregado con exito.' visible={showMessage} success={success} withRedirect={true} />
+      <ResultMessage
+        message='El item se ha agregado con exito.'
+        visible={showMessage}
+        success={success}
+        withRedirect={true}
+      />
       <TitleContainer>Add new item</TitleContainer>
       <Formik
         onSubmit={onSubmit}
@@ -103,7 +140,13 @@ const AddItem = () => {
           <Form style={{ paddingLeft: 10 }}>
             <Input name='title' label='Title' />
             <Input name='description' label='Description' />
-            <Input name='pictureUrl' label='Picture URL' />
+            {/* <Input name='pictureUrl' label='Picture URL' /> */}
+            <FileInput
+              type='file'
+              name='pictureUrl'
+              onChange={(e) => handleFileChange(e, formik)}
+            />
+            {/* <FileInput name='pictureUrl' label='Image File' onChange={(e) => handleFileChange(e, formik)}/> */}
             <Select name='category' label='Category' options={categories} />
             <Input name='price' type='number' label='Price' />
             <Input name='stock' type='number' label='Initial Stock' />
