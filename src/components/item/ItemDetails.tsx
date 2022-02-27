@@ -9,7 +9,7 @@ interface ItemDetailsProps {
 }
 
 const DetailsContainer = styled.div`
-  width: 1200px;
+  max-width: 1200px;
   min-height: 75vh;
   margin: 0 auto;
   display: flex;
@@ -19,18 +19,19 @@ const DetailsContainer = styled.div`
 `;
 
 const Main = styled.div`
-  width: 840px;
   box-sizing: border-box;
   padding: 5%;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-grow: 1;
+  min-width: 250px;
 `;
 
 const Aside = styled.div`
   box-sizing: border-box;
   padding: 2%;
-  width: 360px;
+  min-width: 250px;
   border: 1px solid #bbb;
   border-radius: 10px;
   margin: 15px;
