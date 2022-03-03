@@ -135,7 +135,7 @@ const AddItem = () => {
         success={success}
         withRedirect={true}
       />
-      <TitleContainer>Add new item</TitleContainer>
+      <TitleContainer>Agregar producto</TitleContainer>
       <Formik
         onSubmit={onSubmit}
         initialValues={initialValues}
@@ -143,20 +143,20 @@ const AddItem = () => {
       >
         {(formik) => (
           <Form style={{ paddingLeft: 10 }}>
-            <Input name='title' label='Title' />
-            <Input name='description' label='Description' />
+            <Input name='title' label='Titulo' />
+            <Input name='description' label='Descripcion' />
             <FileInput
-              label='Pick an Image'
+              label='Seleccionar imagen'
               name='pictureUrl'
               handleSelection={handleFileChange}
               formik={formik}
               selected={formik.values.pictureUrl}
             />
-            <Select name='category' label='Category' options={categories} />
-            <Input name='price' type='number' label='Price' />
-            <Input name='stock' type='number' label='Initial Stock' />
+            <Select name='category' label='Categoria' options={categories} />
+            <Input name='price' type='number' label='Precio' />
+            <Input name='stock' type='number' label='Stock inicial' />
             <Button type='submit' width='300px' disabled={inProgress} primary>
-              {inProgress ? 'Adding item...' : 'Add Item'}
+              {inProgress ? 'Agregando item...' : 'Agregar item'}
             </Button>
           </Form>
         )}

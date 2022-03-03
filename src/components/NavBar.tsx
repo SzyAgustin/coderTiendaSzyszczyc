@@ -85,7 +85,7 @@ const NavBar = () => {
             </div>
             <div>
               <NavBarLink className={navItemClass} to='/addItem'>
-                Add new item
+                Agregar un producto
               </NavBarLink>
             </div>
             <CartLink to='/cart'>

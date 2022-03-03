@@ -22,7 +22,7 @@ const StyledLabel = styled.label`
   /* display: block; */
   background-color: #1a3394;
   height: 40px;
-  width: 150px;
+  width: 180px;
   color: #fff;
   margin-bottom: 2px;
   justify-content: center;
