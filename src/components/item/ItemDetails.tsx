@@ -85,7 +85,7 @@ const ItemDetails = ({ item }: ItemDetailsProps) => {
         <h2 style={{ fontWeight: 500 }}>{item.title}</h2>
         <Price>$ {item.price}</Price>
         <div style={{ position: 'relative' }}>
-          <ItemCount stock={stock} initial={1} onAdd={add}></ItemCount>
+          <ItemCount stock={stock} initial={1} onAdd={add} withBuyNow/>
         </div>
       </Aside>
     </DetailsContainer>

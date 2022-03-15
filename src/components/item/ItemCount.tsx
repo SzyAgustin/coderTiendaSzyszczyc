@@ -6,6 +6,7 @@ import Button from '../Button';
 interface ItemCountProps {
   stock: number;
   initial: number;
+  withBuyNow?: boolean;
   onAdd(amountToAdd: number): any;
 }
 
@@ -58,7 +59,7 @@ const AmountButtonMinus = styled(AmountButton)`
   margin-bottom: 2px;
 `;
 
-const ItemCount = ({ stock, initial, onAdd }: ItemCountProps) => {
+const ItemCount = ({ stock, initial, withBuyNow, onAdd }: ItemCountProps) => {
   const [amountSelected, setAmountSelected] = React.useState(initial);
   let minusDisabled = amountSelected <= 1;
   let plusDisabled = amountSelected >= stock;
@@ -123,7 +124,7 @@ const ItemCount = ({ stock, initial, onAdd }: ItemCountProps) => {
       <Stock>
         Stock: {stock} {stock === 1 ? 'unidad' : 'unidades'}.
       </Stock>
-      {useLocation().pathname.includes('item') && (
+      {withBuyNow && (
         <Button primary={true} onClick={buyNow} marginTop={10}>
           Comprar ahora
         </Button>
