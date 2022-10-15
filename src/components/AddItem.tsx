@@ -162,6 +162,7 @@ const AddItem = () => {
         )}
       </Formik>
       <div></div>
+      <div></div>
     </AddItemContainer>
   );
 };
